@@ -1,0 +1,18 @@
+1.     Find out all exceptions in the System.IO.IOException hierarchy.
+
+2.    Find out all standard exceptions that are part of the hierarchy holding the class System.IO.FileNotFoundException.
+
+3.    Find out all standard exceptions from System.ApplicationException hierarchy.
+
+C++ provides the following documentation for exception handling
+
+Tutorial:
+https://www.cplusplus.com/doc/tutorial/exceptions/
+
+Standard library exception class
+https://www.cplusplus.com/reference/exception/exception/
+
+Exception Header:
+https://www.cplusplus.com/reference/exception/
+
+Apparently I ought to write exceptions that are similar to those in C#

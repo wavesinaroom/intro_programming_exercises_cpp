@@ -1,0 +1,20 @@
+4.    Explain the concept of exceptions and exception handling, when they are used and how to catch exceptions.
+
+5.    Explain when the statement try-finally is used. Explain the relationship between the statements try-finally and using.
+
+6.    Explain the advantages when using exceptions.
+
+-------
+Answers
+-------
+
+4. Exceptions are ways to control the flow of a crashing program by providing a detailed 
+report to the user.
+
+5. Try statements executes the code within and redirects the flow if an error happens.
+Finally statements wrap the actions that are executed in spite of having an error in the program.
+
+6. Exceptions are extremely helpful for debugging code. On the other hand they aid end users
+to determine causes for program crashes during their experience. Essentially, exceptions
+are powerful for improving software in general.
+
