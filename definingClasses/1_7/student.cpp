@@ -21,6 +21,9 @@
 
 class student
 {
+
+static int studentNumber; 
+
 private:
     std::optional<std::string> fullName;
     std::optional<std::string> course;
