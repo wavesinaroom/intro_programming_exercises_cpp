@@ -19,29 +19,32 @@
 #include <iostream>
 #include <optional>
 
-class student
+class Student
 {
 
 static int studentNumber; 
 
-private:
-    std::optional<std::string> fullName;
-    std::optional<std::string> course;
-    std::optional<std::string> subject;
-    std::optional<std::string> university;
-    std::optional<std::string> email;
 public:
+    std::string* fullName;
+    std::string* course;
+    std::string* subject;
+    std::string* university;
+    std::string* email;
     //Constructor
-    student(std::string fullName, std::string course, std::string subject, std::string university, std::string email); 
-    student(std::string fullName, std::string course, std::string subject, std::string university); 
-    student(std::string fullName, std::string course, std::string subject);
-    student(std::string fullName, std::string course);
-    student(std::string fullName);
+    Student(std::string *fullName, std::string* course, std::string* subject, std::string* university, std::string* email); 
+    Student(std::string *fullName, std::string* course, std::string* subject, std::string* university); 
+    Student(std::string *fullName, std::string* course, std::string* subject);
+    Student(std::string *fullName, std::string* course);
+    Student(std::string *fullName);
+    Student();
     //Destructor
-    ~student();
+    ~Student();
+
+    void showStudentInfo(); 
+
 };
 
-student::student(std::string fullName, std::string course, std::string subject, std::string university, std::string email)
+Student::Student(std::string *fullName, std::string* course, std::string* subject, std::string* university, std::string* email)
 {
     this->fullName = fullName;
     this->course = course;
@@ -49,31 +52,57 @@ student::student(std::string fullName, std::string course, std::string subject, 
     this->university = university;
     this->email = email;
 }
-student::student(std::string fullName, std::string course, std::string subject, std::string university)
+
+
+
+Student::Student(std::string *fullName, std::string* course, std::string* subject, std::string* university)
 {
     this->fullName = fullName;
     this->course = course;
     this->subject = subject;
     this->university = university;
+    this->email = NULL;
 }
-student::student(std::string fullName, std::string course, std::string subject)
+
+Student::Student(std::string *fullName, std::string* course, std::string* subject)
 {
     this->fullName = fullName;
     this->course = course;
     this->subject = subject;
+    this->university = NULL;
+    this->email = NULL;
 }
-student::student(std::string fullName, std::string course)
+
+Student::Student(std::string *fullName, std::string *course)
 {
     this->fullName = fullName;
     this->course = course;
+    this->subject = NULL;
+    this->university = NULL;
+    this->email = NULL;
 }
-student::student(std::string fullName)
+
+
+
+Student::Student(std::string *fullName)
 {
     this->fullName = fullName;
+    this->course = NULL;
+    this->subject = NULL;
+    this->university = NULL;
+    this->email = NULL;
 }
 
-student::~student()
+
+Student::~Student()
 {
 }
 
+int main(int argc, char const *argv[])
+{
 
+    Student student = Student();
+    std::cout<<student.fullName<<'\n'; 
+
+    return 0;
+}
