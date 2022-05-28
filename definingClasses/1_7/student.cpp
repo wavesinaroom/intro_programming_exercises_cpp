@@ -24,12 +24,14 @@ class Student
 
 static int studentNumber; 
 
-public:
+private:
     std::optional<std::string> fullName;
     std::optional<std::string> course;
     std::optional<std::string> subject;
     std::optional<std::string> university;
     std::optional<std::string> email;
+
+public:
     //Constructor
     Student(std::string fullName, std::string course, std::string subject, std::string university, std::string email); 
     Student(std::string fullName, std::string course, std::string subject, std::string university); 
@@ -39,7 +41,22 @@ public:
     Student();
     //Destructor
     ~Student();
+    //Encapsulation
+    std::string getFullName(){return fullName.value();}
+    void setFullName(std::string fullName){this->fullName = fullName;}
 
+    std::string getCourse(){return course.value();}
+    void setCourse(std::string course){this->course = course;}
+
+    std::string getSubject(){return subject.value();}
+    void setSubject(std::string subject){this->subject = subject;}
+
+    std::string getUniversity(){return university.value();}
+    void setUniversity(std::string university){this->university = university;}
+
+    std::string getEmail(){return email.value();}
+    void setEmail(std::string email){this->email = email;}
+    
     void showStudentInfo(); 
 
 };
