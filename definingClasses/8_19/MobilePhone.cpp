@@ -48,7 +48,6 @@
   #include<iostream>
   #include<optional>
   #include<cstdarg>
-  #include<string>
 
   class MobilePhone
   {
