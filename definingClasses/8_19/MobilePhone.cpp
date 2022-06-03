@@ -47,24 +47,27 @@
 
   #include<iostream>
   #include<optional>
+  #include<cstdarg>
+  #include<string>
 
   class MobilePhone
   {
   private:
     /* data */
   public:
-    std::optional<std::string> model;
-    std::optional<std::string> manufacturer;
-    std::optional<std::string> price;
-    std::optional<std::string> owner;
-    std::optional<std::string> battery_model;
-    std::optional<std::string> battery_idle_time;
-    std::optional<std::string> battery_hours_talk;
-    std::optional<std::string> screen_size;
-    std::optional<std::string> screen_buttons;
+    std::optional<const char *> model;
+    std::optional<const char *> manufacturer;
+    std::optional<const char *> price;
+    std::optional<const char *> owner;
+    std::optional<const char *> battery_model;
+    std::optional<const char *> battery_idle_time;
+    std::optional<const char *> battery_hours_talk;
+    std::optional<const char *> screen_size;
+    std::optional<const char *> screen_buttons;
 
 
     MobilePhone(/* args */);
+    MobilePhone(const char * model...); 
     ~MobilePhone();
   };
   
@@ -72,7 +75,30 @@
   {
   }
   
+  MobilePhone::MobilePhone(const char * model...)
+  {
+    va_list args;
+    va_start(args, model);
+    this->model = model;
+    this->manufacturer = va_arg(args,const char *);
+    this->price = va_arg(args, const char *);
+    this->owner = va_arg(args, const char *);
+    this->battery_model = va_arg(args, const char *);
+    this->battery_idle_time = va_arg(args, const char *);
+    this->battery_hours_talk = va_arg(args, const char *);
+    this->screen_size = va_arg(args, const char *);
+    this->screen_buttons = va_arg(args, const char *); 
+    va_end(args); 
+  }
+
   MobilePhone::~MobilePhone()
   {
+  
+  }
+  
+  int main(int argc, char const *argv[])
+  {
+    MobilePhone mobilePhone = MobilePhone("S5", "Nokia", "400EUR");
+    return 0;
   }
   
