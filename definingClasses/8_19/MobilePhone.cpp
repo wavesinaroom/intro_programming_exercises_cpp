@@ -51,6 +51,8 @@
 
   class MobilePhone
   {
+    static MobilePhone nokiaN95; 
+
   private:
     /* data */
   public:
@@ -64,10 +66,24 @@
     std::optional<const char *> screen_size;
     std::optional<const char *> screen_buttons;
 
-
     MobilePhone(/* args */);
     MobilePhone(const char * model...); 
     ~MobilePhone();
+  
+    static void printNokiaSpecs()
+    {
+      std::cout<<"Nokia N95 specs"<<'\n';
+      std::cout<<"Model: "<<nokiaN95.model.value()<<'\n';
+      std::cout<<"Manufacturer: "<<nokiaN95.manufacturer.value()<<'\n';
+      std::cout<<"Price: "<<nokiaN95.price.value()<<'\n';
+      std::cout<<"Owner: "<<nokiaN95.owner.value()<<'\n';
+      std::cout<<"Battery model: "<<nokiaN95.battery_model.value()<<'\n';
+      std::cout<<"Battery idle time: "<<nokiaN95.battery_idle_time.value()<<'\n';
+      std::cout<<"Battery hours talk: "<<nokiaN95.battery_hours_talk.value()<<'\n';
+      std::cout<<"Size: "<<nokiaN95.screen_size.value()<<'\n';
+      std::cout<<"Screen buttons: "<<nokiaN95.screen_buttons.value()<<'\n';
+    }
+
   };
   
   MobilePhone::MobilePhone(/* args */)
@@ -95,9 +111,11 @@
   
   }
   
+  MobilePhone MobilePhone::nokiaN95 = MobilePhone("N95", "Nokia", "USD$333", "Luke Skywalker", "Li-lon 950", "280 hours", "5 hours","40x53 mm", "3 buttons"); 
+
   int main(int argc, char const *argv[])
   {
-    MobilePhone mobilePhone = MobilePhone("S5", "Nokia", "400EUR");
+    MobilePhone::printNokiaSpecs(); 
     return 0;
   }
   
