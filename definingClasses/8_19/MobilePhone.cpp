@@ -49,6 +49,8 @@
   #include<optional>
   #include<cstdarg>
 
+  #include "Battery.h"
+
   class MobilePhone
   {
     static MobilePhone nokiaN95; 
@@ -116,6 +118,8 @@
   int main(int argc, char const *argv[])
   {
     MobilePhone::printNokiaSpecs(); 
+
+    Battery battery = Battery(BatteryType::NiCd);  
     return 0;
   }
   
