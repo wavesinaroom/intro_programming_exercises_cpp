@@ -1,8 +1,10 @@
+#pragma once
+
 #include<iostream>
 #include<optional>
 #include<cstdarg>
 
-enum class BatteryType {LiIon, NiMH, NiCd};
+enum class BatteryType {LiON, NimH, NiCD};
 
 class Battery
 {
@@ -15,7 +17,7 @@ public:
 
     BatteryType batteryType; 
     Battery(/* args */);
-    Battery(const char* battery_model...);
+    Battery(BatteryType batteryType...);
     ~Battery();
 };
 
@@ -23,10 +25,11 @@ Battery::Battery(/* args */)
 {
 }
 
-Battery::Battery(const char* battery_model...)
+Battery::Battery(BatteryType batteryType...)
 {
     va_list args;
-    va_start(args, battery_model);
+    va_start(args, batteryType);
+    this->batteryType = batteryType;
     this->battery_model = va_arg(args, const char *);
     this->battery_idle_time = va_arg(args, const char *);
     this->battery_hours_talk = va_arg(args, const char *);
