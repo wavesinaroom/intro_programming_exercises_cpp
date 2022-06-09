@@ -9,13 +9,14 @@ enum class BatteryType {LiON, NimH, NiCD};
 class Battery
 {
 private:
-    /* data */
-public:
+
     std::optional<const char *> battery_model;
     std::optional<const char *> battery_idle_time;
     std::optional<const char *> battery_hours_talk;
-
     BatteryType batteryType; 
+    friend class GSM; 
+public:
+
     Battery(/* args */);
     Battery(BatteryType batteryType...);
     ~Battery();

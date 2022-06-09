@@ -7,10 +7,10 @@
 class Display
 {
 private:
-    /* data */
-public:
     std::optional<const char *> screen_size;
     std::optional<const char *> screen_buttons;
+    friend class GSM;
+public:
 
     Display(/* args */);
     Display(const char* screen_size...); 

@@ -9,14 +9,13 @@
     static GSM nokiaN95; 
 
   private:
-    /* data */
-  public:
     std::optional<const char *> model;
     std::optional<const char *> manufacturer;
     std::optional<const char *> price;
     std::optional<const char *> owner;
     Battery battery;    
     Display display; 
+  public:
 
     GSM(/* args */);
     GSM(const char * model...); 
