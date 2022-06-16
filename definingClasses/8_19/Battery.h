@@ -13,8 +13,9 @@ private:
     std::optional<const char *> battery_model;
     std::optional<const char *> battery_idle_time;
     std::optional<const char *> battery_hours_talk;
-    BatteryType batteryType; 
+    std::optional<BatteryType> batteryType; 
     friend class GSM; 
+    friend class GSMTest;
 public:
 
     Battery(/* args */);

@@ -10,6 +10,7 @@ private:
     std::optional<const char *> screen_size;
     std::optional<const char *> screen_buttons;
     friend class GSM;
+    friend class GSMTest;
 public:
 
     Display(/* args */);
