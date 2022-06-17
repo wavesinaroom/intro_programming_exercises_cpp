@@ -73,7 +73,7 @@
     std::cout<<this->manufacturer.value_or("Manufacter missing")<<'\n';
     std::cout<<this->price.value_or("Price missing")<<'\n';
     std::cout<<this->owner.value_or("Owner missing")<<'\n';
-    /*
+    
     switch (this->battery.batteryType)
     {
     case BatteryType::LiON:
@@ -94,7 +94,7 @@
     std::cout<<this->battery.battery_hours_talk.value_or("Battery hours talk missing")<<'\n';
     std::cout<<this->display.screen_buttons.value_or("Screen buttons missing")<<'\n';
     std::cout<<this->display.screen_size.value_or("Screen size mising")<<'\n';
-    */
+    
   }
 
   GSM GSM::nokiaN95 = GSM("N95", "Nokia", "USD$333", "Luke Skywalker", "Li-lon 950", "280 hours", "5 hours","40x53 mm", "3 buttons"); 
