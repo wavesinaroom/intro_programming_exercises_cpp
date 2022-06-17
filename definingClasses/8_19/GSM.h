@@ -74,7 +74,7 @@
     std::cout<<this->price.value_or("Price missing")<<'\n';
     std::cout<<this->owner.value_or("Owner missing")<<'\n';
     
-    switch (this->battery.batteryType)
+    switch (this->battery.batteryType.value())
     {
     case BatteryType::LiON:
         std::cout<<"Battery type: LiON"<<'\n';
