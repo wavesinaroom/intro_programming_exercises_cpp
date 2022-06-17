@@ -7,6 +7,7 @@ class Call
 
 
 private:
+    //Needs to be adapted to a more real case use
     std::chrono::time_point<std::chrono::system_clock> start, end;
     std::chrono::duration<double>elapsed_seconds = end - start;
     std::time_t start_time = std::chrono::system_clock::to_time_t(start);
@@ -14,7 +15,7 @@ private:
 
 public:
 
-    static std::vector<Call> CalHistory; 
+    static std::vector<Call> CallHistory; 
 
     Call(/* args */);
     ~Call();
@@ -22,11 +23,11 @@ public:
 
 Call::Call(/* args */)
 {
-    CalHistory.push_back(*this);     
+    CallHistory.push_back(*this);     
 }
 
 Call::~Call()
 {
 }
 
-std::vector<Call> Call::CalHistory;
+std::vector<Call> Call::CallHistory;

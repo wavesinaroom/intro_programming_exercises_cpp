@@ -5,6 +5,7 @@
   #include<cstdarg>
   #include "Battery.h"
   #include "Display.h"
+  #include "Call.h"
 
   class GSM
   {
@@ -16,6 +17,7 @@
     std::optional<const char *> owner;
     Battery battery;    
     Display display; 
+    Call call;
     friend class GSMTest; 
   public:
 
@@ -26,6 +28,10 @@
 
     void printPhoneInfo();  
     static void printNokiaSpecs();
+    void addPhoneCall();
+    void removePhoneCall();
+    void removeAllCalls();
+
 
   };
   
@@ -56,6 +62,8 @@
   {
   
   }
+
+  GSM GSM::nokiaN95 = GSM("N95", "Nokia", "USD$333", "Luke Skywalker", "Li-lon 950", "280 hours", "5 hours","40x53 mm", "3 buttons"); 
   
   void GSM::printNokiaSpecs()
   {
@@ -97,4 +105,18 @@
     
   }
 
-  GSM GSM::nokiaN95 = GSM("N95", "Nokia", "USD$333", "Luke Skywalker", "Li-lon 950", "280 hours", "5 hours","40x53 mm", "3 buttons"); 
+  void::GSM::addPhoneCall()
+  {
+    call = Call(); 
+  }
+
+  void::GSM::removePhoneCall()
+  {
+    Call::CallHistory.pop_back(); 
+  }
+
+  void::GSM::removeAllCalls()
+  {
+    Call::CallHistory.clear();
+  }
+
