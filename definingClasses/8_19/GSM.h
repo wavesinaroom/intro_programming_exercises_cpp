@@ -31,8 +31,7 @@
     void addPhoneCall();
     void removePhoneCall();
     void removeAllCalls();
-
-
+    static float calculateBill(float call_price);
   };
   
   GSM::GSM(/* args */)
@@ -112,11 +111,22 @@
 
   void::GSM::removePhoneCall()
   {
-    Call::CallHistory.pop_back(); 
+    Call::call_history.pop_back(); 
   }
 
   void::GSM::removeAllCalls()
   {
-    Call::CallHistory.clear();
+    Call::call_history.clear();
   }
 
+  float::GSM::calculateBill(float call_price)
+  {
+    Call::call_history[0].call_start.tm_hour = 0; 
+    Call::call_history[0].call_start.tm_min = 35;
+    Call::call_history[0].call_start.tm_sec = 40;
+    Call::call_history[0].call_start.tm_year = 2022;
+    Call::call_history[0].call_start.tm_mon = 6;
+    Call::call_history[0].call_start.tm_mday = 15;  
+    Call::call_history[0].call_duration = difftime(Call::call_history[0].call_end,mktime(&Call::call_history[0].call_start));
+    return call_price * Call::call_history[0].call_duration;
+  }

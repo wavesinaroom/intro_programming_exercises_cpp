@@ -38,8 +38,7 @@
    from the archive of phone calls (CallHistory), as the price of a phone call is 
    passed as a parameter to the method.
 
-   19.   Create a class GSMCallHistoryTest, with which to test the functionality of the class GSM,
-   from task 12, as an object of type GSM. Then add to it a few phone calls (Call). Display
+   19.   Create a class GSMCallHistoryTest, with which to test the functionality of the class GSM, from task 12, as an object of type GSM. Then add to it a few phone calls (Call). Display
    information about each phone call. Assuming that the price per minute is 0.37, calculate and
    display the total cost of all calls. Remove the longest conversation from archive with phone
    calls and calculate the total price for all calls again. Finally, clear the archive.

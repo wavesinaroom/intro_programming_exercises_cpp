@@ -1,33 +1,32 @@
 #include<iostream>
-#include<chrono>
 #include<vector>
+#include<time.h>
 
 class Call
 {
-
-
 private:
-    //Needs to be adapted to a more real case use
-    std::chrono::time_point<std::chrono::system_clock> start, end;
-    std::chrono::duration<double>elapsed_seconds = end - start;
-    std::time_t start_time = std::chrono::system_clock::to_time_t(start);
-    std::time_t end_time = std::chrono::system_clock::to_time_t(end);
-
+    struct tm call_start={0};
+    time_t call_end;
+    double call_duration;
+    float call_price;
 public:
+    friend class GSM; 
 
-    static std::vector<Call> CallHistory; 
-
+    static std::vector<Call> call_history; 
     Call(/* args */);
     ~Call();
+
+    float CalculateBill(float call_price);
 };
+
 
 Call::Call(/* args */)
 {
-    CallHistory.push_back(*this);     
+    call_history.push_back(*this);     
 }
 
 Call::~Call()
 {
 }
 
-std::vector<Call> Call::CallHistory;
+std::vector<Call> Call::call_history;
