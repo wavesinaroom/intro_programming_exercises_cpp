@@ -19,6 +19,7 @@
     Display display; 
     Call call;
     friend class GSMTest; 
+    friend class GSMCallHistoryTest;
   public:
 
     static GSM nokiaN95; 
@@ -29,9 +30,9 @@
     void printPhoneInfo();  
     static void printNokiaSpecs();
     void addPhoneCall();
-    void removePhoneCall();
+    void removePhoneCall(int call_log);
     void removeAllCalls();
-    static float calculateBill(float call_price);
+    static float calculateBill(int call_log, const float call_price = 0.37);
   };
   
   GSM::GSM(/* args */)
@@ -109,9 +110,10 @@
     call = Call(); 
   }
 
-  void::GSM::removePhoneCall()
+  void::GSM::removePhoneCall(int call_log)
   {
-    Call::call_history.pop_back(); 
+    std::vector<Call>::iterator call_iterator = Call::call_history.begin()+call_log;
+    Call::call_history.erase(call_iterator); 
   }
 
   void::GSM::removeAllCalls()
@@ -119,14 +121,7 @@
     Call::call_history.clear();
   }
 
-  float::GSM::calculateBill(float call_price)
+  float::GSM::calculateBill(int call_log, const float call_price = 0.37)
   {
-    Call::call_history[0].call_start.tm_hour = 0; 
-    Call::call_history[0].call_start.tm_min = 35;
-    Call::call_history[0].call_start.tm_sec = 40;
-    Call::call_history[0].call_start.tm_year = 2022;
-    Call::call_history[0].call_start.tm_mon = 6;
-    Call::call_history[0].call_start.tm_mday = 15;  
-    Call::call_history[0].call_duration = difftime(Call::call_history[0].call_end,mktime(&Call::call_history[0].call_start));
-    return call_price * Call::call_history[0].call_duration;
+    return call_price * Call::call_history[call_log].call_duration;
   }
