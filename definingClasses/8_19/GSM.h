@@ -1,4 +1,4 @@
-  #pragma once; 
+  #pragma once
 
   #include<iostream>
   #include<optional>
@@ -17,7 +17,7 @@
     std::optional<const char *> owner;
     Battery battery;    
     Display display; 
-    Call call;
+
     friend class GSMTest; 
     friend class GSMCallHistoryTest;
   public:
@@ -29,15 +29,12 @@
 
     void printPhoneInfo();  
     static void printNokiaSpecs();
-    void addPhoneCall();
+    void addPhoneCall(int hour...);
     void removePhoneCall(int call_log);
     void removeAllCalls();
-    static float calculateBill(int call_log, const float call_price = 0.37);
+    void printCallHistory();
+    void calculateBill(double call_price);
   };
-  
-  GSM::GSM(/* args */)
-  {
-  }
   
   GSM::GSM(const char * model...)
   {
@@ -105,9 +102,13 @@
     
   }
 
-  void::GSM::addPhoneCall()
+  void::GSM::addPhoneCall(int hour...)
   {
-    call = Call(); 
+    va_list args;
+    va_start(args, hour);
+
+    Call call = Call(hour, va_arg(args, int),va_arg(args, int),va_arg(args, int),va_arg(args, int),va_arg(args, int));       
+
   }
 
   void::GSM::removePhoneCall(int call_log)
@@ -121,7 +122,28 @@
     Call::call_history.clear();
   }
 
-  float::GSM::calculateBill(int call_log, const float call_price = 0.37)
+  void::GSM::printCallHistory()
   {
-    return call_price * Call::call_history[call_log].call_duration;
+    for (auto &&call : Call::call_history)
+    {
+      std::cout<<"Call info"<<'\n';
+      std::cout<<"Hours: "<<call.call_start.tm_hour<<'\n';
+      std::cout<<"Minutes: "<<call.call_start.tm_min<<'\n';
+      std::cout<<"Seconds: "<<call.call_start.tm_sec<<'\n';
+      std::cout<<"Year: "<<call.call_start.tm_year<<'\n';
+      std::cout<<"Month: "<<call.call_start.tm_mon<<'\n';
+      std::cout<<"Day: "<<call.call_start.tm_mday<<'\n'; 
+      std::cout<<"-------------------------"<<'\n'; 
+    }
+    
   }
+
+  void::GSM::calculateBill(double call_price)
+  {
+
+    for (auto &&call : Call::call_history)
+    {
+      std::cout<<"---------"<<call.call_duration<<'\n';
+    }
+
+  } 

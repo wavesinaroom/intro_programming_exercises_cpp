@@ -4,17 +4,18 @@
 
 class Call
 {
+
 private:
-    struct tm call_start={0};
-    time_t call_end;
+    time_t call_end = time(NULL);
+    struct tm call_start;
     double call_duration;
     float call_price;
-public:
     friend class GSM; 
+    friend class GSMCallHistoryTest;
+public:
 
     static std::vector<Call> call_history; 
-    Call(int hour ...);
-    Call(/* args */);
+    Call(int hour...);
     ~Call();
 
     float CalculateBill(float call_price);
@@ -33,9 +34,8 @@ Call::Call(int hour...)
     this->call_start.tm_mon = va_arg(args, int);
     this->call_start.tm_mday = va_arg(args, int);
     
-    this->call_duration = difftime(call_end, mktime(&call_start));
-
-    call_history.push_back(*this);     
+    this->call_duration = difftime(this->call_end,mktime(&this->call_start));
+    this->call_history.push_back(*this); 
 }
 
 Call::~Call()
@@ -43,3 +43,4 @@ Call::~Call()
 }
 
 std::vector<Call> Call::call_history;
+
