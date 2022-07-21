@@ -121,6 +121,6 @@ std::string Array<T>::stringOverride(T arr[])
 
 int main(int argc, char const *argv[])
 {
-    Array<int> array = Array(5);
+    Array<int> array = Array<int>(5);
     return 0;
 }
