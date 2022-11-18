@@ -1,0 +1,4 @@
+ A text file .txt is given, contining  list of , one per . 
+ Write  progrm tht  in the file text.txt ll the  tht occur in the other file.
+ Ctch nd hndle ll possible exceptions.
+
