@@ -3,6 +3,7 @@
  * correctly.
  */
 
+#include <cstdio>
 #include <iostream>
 #include <iterator>
 #include <list>
@@ -10,18 +11,16 @@
 int measureSublist(std::list<int> & inputList, std::list<int>::iterator head){
 
   std::list<int>::iterator same = head;
-  int count = 0;
 
   while (*same==*head) {
-    ++count;
     ++same;
   }
 
-  return count;
+  return std::distance(head, same);
 }
 
 int main(){
-  std::list<int> input = {4,5,2,0,3,5,1,5,6,8};
+  std::list<int> input = {4,5,2,0,3,5,5,5,6,8};
   std::list<int>::iterator start = input.begin();
   int head=0, current=0, longest = 0;
  
