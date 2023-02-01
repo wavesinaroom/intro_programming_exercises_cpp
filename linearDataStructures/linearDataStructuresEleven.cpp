@@ -18,7 +18,8 @@ struct TNode{
     ~List();
     std::vector<TNode *> elements;
     auto getRoot();
-    void getListNodes(TNode *node);
+    void getNodesVector(TNode *node);
+    auto searchNode(TValue data, TNode *node);    
     void addNode(TValue data);
   private:
     auto getLastNode(TNode *node);
@@ -57,12 +58,12 @@ auto List<TValue>::getLastNode(TNode *node){
 }
 
 template <typename TValue>
-void List<TValue>::getListNodes(TNode *node){
+void List<TValue>::getNodesVector(TNode *node){
   elements.push_back(node);
   if(node->next==nullptr)
     return;
 
-  getListNodes(node->next);
+  getNodesVector(node->next);
 }
 
 template <typename TValue>
@@ -70,12 +71,20 @@ auto List<TValue>::getRoot(){
   return root;
 }
 
+template<typename TValue>
+auto List<TValue>::searchNode(TValue data, TNode *node){
+  if (node->data == data) 
+    return node;
+  return searchNode(data, node->next);
+}
+
 int main(){
   List<int> list; 
   list.addNode(4);
   list.addNode(5);
   list.addNode(6);
-  list.getListNodes(list.getRoot());
+  auto found = list.searchNode(5, list.getRoot());
+  list.getNodesVector(list.getRoot());
   return 0;
 }
 
