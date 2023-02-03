@@ -2,15 +2,15 @@
  * the elements of which have pointers both to the next and the previous elements. Implement 
  * the operations for adding, removing and searching for an element, as well as inserting
  * an element at a given index, retrieving an element by a given index and a method, which returns an array with the elements of the list
- * add -> done
- * search -> done
- * nodes array -> done
- * remove ....
+ * add : pending
+ * nodes array : pending
+ * remove : pending 
  * insert at index : pending
  * retrieve by index : pending
  * */
 
 #include <cstddef>
+#include <cstdio>
 #include <iostream>
 #include <vector>
 
@@ -21,39 +21,44 @@ struct TNode{
   TNode *next = nullptr;
 };
   public:
-    std::vector<TNode *> elements;
+    TNode *it = nullptr;
+    std::vector<TNode> elements;
     List();
     ~List();
-    auto getRoot();
+    void getNodeByIndex(int index);
     void addNode(TValue data);
     void removeNode(TValue data);
-    auto searchNode(TValue data, TNode *node);    
+    auto searchNode(TValue data);    
     void getNodesVector(TNode *node);
   private:
-    auto getLastNode(TNode *node);
+    void getLastNode();
     TNode *root = nullptr;
 };
 
 template <typename TValue>
-auto List<TValue>::getLastNode(TNode *node){
-  if (node->next == nullptr) {
-    return node;
-  }else {
-    return getLastNode(node->next);
-  } 
+void List<TValue>::getLastNode(){
+  it = root;
+  while (it->next) {
+    it = it->next;
+  }
 }
 
 template<typename TValue>
-List<TValue>::List(){
+void List<TValue>::getNodeByIndex(int index){
+  it = root;
+  for (std::size_t i = 0; i<index; ++i) {
+    it = it->next; 
+  }
 }
 
 template<typename TValue>
-List<TValue>::~List<TValue>(){
-}
-
-template <typename TValue>
-auto List<TValue>::getRoot(){
-  return root;
+auto List<TValue>::searchNode(TValue data){
+  it = root;
+  while (it->data!=data) {
+    if (!it->next) 
+      std::cerr<<"Node not found"<<'\n';  
+    it = it->next;
+  }
 }
 
 template<typename TValue>
@@ -64,37 +69,26 @@ void List<TValue>::addNode(TValue data){
   if(!root)
     root = newNode;
   else{
-    TNode *last = getLastNode(root);
-    last->next = newNode;
-    last->next->previous = last;
+    getLastNode();
+    it->next = newNode;
+    it->next->previous = it;
   }
 }
 
 template<typename TValue>
 void List<TValue>::removeNode(TValue data){
-  auto node = searchNode(data, getRoot());
-  node->previous->next = node->next;
-  node->next->previous = node->previous;
-  node = nullptr;
-}
-
-template<typename TValue>
-auto List<TValue>::searchNode(TValue data, TNode *node ){
-  if (node->data == data) 
-    return node;
-  return searchNode(data, node->next);
+  searchNode(data);
+  it->previous->next = it->next;
+  it->next->previous = it->previous;
+  it = nullptr;
 }
 
 template <typename TValue>
 void List<TValue>::getNodesVector(TNode *node){
-  elements.push_back(node);
-  if(node->next==nullptr)
-    return;
-
-  getNodesVector(node->next);
+  it = root;
+  while(it->next)
+    elements.push_back(*it);
 }
-
-
 
 int main(){
   List<int> list; 
@@ -103,8 +97,6 @@ int main(){
   list.addNode(6);
   list.addNode(7);
   list.removeNode(5);
-  auto found = list.searchNode(5, list.getRoot());
-  list.getNodesVector(list.getRoot());
   return 0;
 }
 
