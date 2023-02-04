@@ -4,9 +4,9 @@
  * an element at a given index, retrieving an element by a given index and a method, which returns an array with the elements of the list
  * add : done
  * nodes array : done
- * remove : pending 
+ * remove : done 
  * insert at index : pending
- * retrieve by index : ready
+ * retrieve by index : function's ready, can't retrieve a *TNode though because the struct lives inside List
  * */
 
 #include <cstddef>
@@ -28,7 +28,7 @@ struct TNode{
     auto getNodeByIndex(int index);
     void addNode(TValue data);
     void removeNode(TValue data);
-    auto searchNode(TValue data);    
+    void searchNode(TValue data);    
     void getNodesVector();
   private:
     void getLastNode();
@@ -57,11 +57,11 @@ auto List<TValue>::getNodeByIndex(int index){
   for (std::size_t i = 0; i<index; ++i) {
     it = it->next; 
   }
-  return *it;
+  return it;
 }
 
 template<typename TValue>
-auto List<TValue>::searchNode(TValue data){
+void List<TValue>::searchNode(TValue data){
   it = root;
   while (it->data!=data) {
     if (!it->next) 
@@ -87,11 +87,8 @@ void List<TValue>::addNode(TValue data){
 template<typename TValue>
 void List<TValue>::removeNode(TValue data){
   searchNode(data);
-  while (it->next) {
-    it->previous->next = it->next;
-    it->next->previous = it->previous;
-    it = it->next;
-  }
+  it->previous->next = it->next;
+  it->next->previous = it->previous;
 }
 
 template <typename TValue>
@@ -110,7 +107,8 @@ int main(){
   list.addNode(6);
   list.addNode(7);
   list.getNodesVector();
-  
+  list.removeNode(5);
+  list.getNodesVector();
   return 0;
 }
 
