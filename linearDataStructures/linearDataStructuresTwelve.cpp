@@ -46,10 +46,18 @@ void Dynamic<TValue>::Push(TValue data){
     top = newNode;
 }
 
+template<typename TValue>
+void Dynamic<TValue>::Pop(){
+  it = top;
+  top = top->previous;
+  it = nullptr;
+}
+
 int main(){
   Dynamic<int> stack;
   stack.Push(8);
   stack.Push(9);
+  stack.Pop();
 
   return 0;
 }
