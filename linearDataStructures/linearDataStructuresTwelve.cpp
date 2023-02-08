@@ -2,7 +2,7 @@
  * Add methods for all commonly used operations like Push(), Pop(), Peek(), Clear() and Count.
  * Push(T) - adds a new element on the top of the stack -> done
  * Pop() - returns the highest element and removes it from the stack -> done
- * Peek() - returns the highest elements without removing it
+ * Peek() - returns the highest elements without removing it -> done
  * Count - returns the count of elements in the stack
  * Clear() - returns all elements of the stack
  */
@@ -44,6 +44,7 @@ void Dynamic<TValue>::Push(TValue data){
   }
   else
     top = newNode;
+  ++Count;
 }
 
 template<typename TValue>
@@ -51,6 +52,7 @@ void Dynamic<TValue>::Pop(){
   it = top;
   top = top->previous;
   it = nullptr;
+  --Count;
 }
 
 template<typename TValue>
@@ -63,6 +65,8 @@ int main(){
   stack.Push(8);
   stack.Push(9);
   stack.Pop();
+  stack.Push(10);
+  stack.Push(11);
   int retrieved = stack.Peek();
 
   return 0;
