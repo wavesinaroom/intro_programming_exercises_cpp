@@ -7,17 +7,19 @@ template<typename TValue>
 class Deque{
   struct TNode{
     TValue data;
-    TValue * previous;
-    TValue * next;
+    TNode * previous = nullptr;
+    TNode * next = nullptr;
   };
   public:
     Deque(); 
     ~Deque();
+    void addHead(TValue);
+    void addTail(TValue);
   private:
     void getLast();
     void getFirst();
-    TValue * it;
-    TValue * root;
+    TNode * it = nullptr;
+    TNode * root = nullptr;
 };
 
 template<typename TValue>
@@ -26,6 +28,50 @@ Deque<TValue>::Deque(){}
 template<typename TValue>
 Deque<TValue>::~Deque(){}
 
+template<typename TValue>
+void Deque<TValue>::addHead(TValue data){
+  TNode * addition = new TNode;
+  addition->data = data;
+  if(!root)
+    root = addition;
+  else{
+    getFirst();
+    it->next = addition;
+  }
+}
 
+template<typename TValue>
+void Deque<TValue>::addTail(TValue data){
+  TNode * addition = new TNode;
+  addition->data = data;
+  if (!root) 
+    root = addition; 
+  else{
+    getLast();
+    it->previous = addition;  
+  }
+}
 
+template<typename TValue>
+void Deque<TValue>::getFirst(){
+  it = root;
+  while (it->next) {
+    it = it->next;
+  }
+}
 
+template<typename TValue>
+void Deque<TValue>::getLast(){
+  it = root;
+  while (it->previous) {
+    it = it->previous;
+  }
+}
+
+int main(){
+  Deque<int> deque;
+  deque.addHead(8);
+  deque.addHead(7);
+  deque.addTail(3);
+  return 0;
+}
