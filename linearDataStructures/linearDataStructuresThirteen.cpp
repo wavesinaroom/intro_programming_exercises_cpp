@@ -20,6 +20,7 @@ class Deque{
     void addTail(TValue);
     void removeHead();
     void removeTail(); 
+    void clear();
   private:
     std::vector<TNode*> elements;
     void getLast();
@@ -90,12 +91,30 @@ void Deque<TValue>::removeTail(){
   it->previous = NULL;
 }
 
+template<typename TValue>
+void Deque<TValue>::clear(){
+  getFirst();
+  while (it!=root) {
+    it = it->previous;
+    it->next = NULL;
+  }
+  getLast();
+  while (it!=root) {
+   it = it->next;
+   it->previous = NULL;
+  }
+  root = NULL;
+}
 int main(){
   Deque<int> deque;
   deque.addHead(8);
   deque.addHead(2);
+  deque.addHead(2);
   deque.addTail(3);
-  deque.removeHead();
+  deque.addTail(3);
+  deque.addTail(3);
+  deque.addTail(3);
+  deque.clear();
 
   return 0;
 }
