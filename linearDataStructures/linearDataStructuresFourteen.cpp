@@ -4,3 +4,19 @@
  * throw an appropriate exception.*/
 
 #include <iostream>
+
+template <typename TValue>
+class CQueue {
+  struct TNode{
+    TValue data;
+    TNode next = nullptr;
+    TNode previous = nullptr;
+  };
+  public:
+    CQueue();
+    ~CQueue(); 
+  private:
+    TNode * it = nullptr;
+    TNode * root = nullptr;
+
+};
