@@ -7,18 +7,12 @@
 
 template <typename TValue>
 class CQueue {
-  struct TNode{
-    TValue data;
-    TNode next = nullptr;
-    TNode previous = nullptr;
-  };
   public:
     CQueue();
     ~CQueue(); 
+    void add();
   private:
     int size = 2;
-    TNode * it = nullptr;
-    TNode * root = nullptr;
     void resize(TValue* &arr){
       TValue *resize;
       resize = new TValue[size*2];
