@@ -16,7 +16,19 @@ class CQueue {
     CQueue();
     ~CQueue(); 
   private:
+    int size = 2;
     TNode * it = nullptr;
     TNode * root = nullptr;
+    void resize(TValue* &arr){
+      TValue *resize;
+      resize = new TValue[size*2];
+
+      for (int i = 0; i < size; ++i) {
+        resize[i] = arr[i];
+      }
+      delete[] arr;
+      arr = resize;
+      size *=2;
+    }
 
 };
