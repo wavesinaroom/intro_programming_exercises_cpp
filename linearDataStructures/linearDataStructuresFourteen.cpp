@@ -42,9 +42,13 @@ CQueue<TValue>::~CQueue(){}
 template<typename TValue>
 void CQueue<TValue>::add(TValue data){
   array = &data;
+  ++array;
+  if (!array) 
+    resize(); 
 }
+
 int main(){
-  CQueue<std::string>test(8) ; 
+  CQueue<std::string>test(1) ; 
   test.add("data");
   return 0;
 }
