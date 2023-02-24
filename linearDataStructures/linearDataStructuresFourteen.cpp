@@ -3,26 +3,53 @@
  * and retrieving without removing the element in succession. If an operation is invalid,
  * throw an appropriate exception.*/
 
+#include <cstddef>
+#include <cstdio>
 #include <iostream>
+#include <string>
 
 template <typename TValue>
 class CQueue {
   public:
-    CQueue();
+    CQueue(int size);
     ~CQueue(); 
-    void add();
+    void add(TValue data);
   private:
-    int size = 2;
-    void resize(TValue* &arr){
+    int currentSize;
+    //Definitely use a pointers array
+    TValue* array;
+    void resize(){
       TValue *resize;
-      resize = new TValue[size*2];
+      resize = new TValue[currentSize*2];
 
-      for (int i = 0; i < size; ++i) {
-        resize[i] = arr[i];
+      for (int i = 0; i < currentSize; ++i) {
+        resize[i] = array[i];
       }
-      delete[] arr;
-      arr = resize;
-      size *=2;
+      delete[] array;
+      array = resize;
+      currentSize *=2;
     }
-
 };
+
+template<typename TValue>
+CQueue<TValue>::CQueue(int size){
+  currentSize = size;
+  array = new TValue [currentSize];}
+
+template<typename TValue>
+CQueue<TValue>::~CQueue(){}
+
+template<typename TValue>
+void CQueue<TValue>::add(TValue data){
+  if(array!=nullptr){
+    ++array;
+  }
+  if (!array+1) 
+    resize(); 
+  ++array;
+  *array = data;
+}
+
+int main(){
+  return 0;
+}
