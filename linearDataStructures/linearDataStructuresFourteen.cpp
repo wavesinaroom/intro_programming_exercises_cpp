@@ -11,44 +11,42 @@
 template <typename TValue>
 class CQueue {
   public:
-    CQueue(int size);
+    CQueue();
     ~CQueue(); 
     void add(TValue data);
   private:
-    int currentSize;
+    int size = 1;
     //Definitely use a pointers array
     TValue* array;
     void resize(){
-      TValue *resize;
-      resize = new TValue[currentSize*2];
+      TValue *resize = new TValue[size*2];
 
-      for (int i = 0; i < currentSize; ++i) {
+      for (int i = 0; i < size; ++i) {
         resize[i] = array[i];
       }
       delete[] array;
       array = resize;
-      currentSize *=2;
+      size *=2;
     }
 };
 
 template<typename TValue>
-CQueue<TValue>::CQueue(int size){
-  currentSize = size;
-  array = new TValue [currentSize];}
+CQueue<TValue>::CQueue(){
+  array = new TValue [size];}
 
 template<typename TValue>
 CQueue<TValue>::~CQueue(){}
 
 template<typename TValue>
 void CQueue<TValue>::add(TValue data){
-  array = &data;
+  *array = data;
+  if(!++array)
+    resize();
   ++array;
-  if (!array) 
-    resize(); 
 }
 
 int main(){
-  CQueue<std::string>test(1) ; 
+  CQueue<std::string>test; 
   test.add("data");
   return 0;
 }
