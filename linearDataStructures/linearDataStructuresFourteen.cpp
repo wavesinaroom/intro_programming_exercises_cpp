@@ -3,47 +3,62 @@
  * and retrieving without removing the element in succession. If an operation is invalid,
  * throw an appropriate exception.*/
 
+#include <cstdlib>
 #include <cstddef>
-#include <cstdio>
 #include <iostream>
 #include <string>
+#include <array>
 
 template <typename TValue>
 class CQueue {
+  typedef struct Element{
+    TValue data;
+    int index=0;
+  }element;
   public:
     CQueue();
     ~CQueue(); 
+    void expand();
     void add(TValue data);
   private:
     int size = 1;
-    TValue* array = new TValue[size];
+    element* array; 
 };
 template<typename TValue>
 CQueue<TValue>::CQueue(){
-  array = new TValue [size];}
+  array = (element*) malloc(sizeof(element));
+}
 
 template<typename TValue>
 CQueue<TValue>::~CQueue(){}
 
 template<typename TValue>
-void CQueue<TValue>::add(TValue data){
-  *array = data;
-  if (*array == array[size-1]) {
-    TValue *resize = new TValue[size*2];
-
-    for (int i = 0; i < size; ++i) {
-      resize[i] = array[i];
-    }
-    delete [] array;
-    array = resize;
-    size *= 2;
+void CQueue<TValue>::expand(){
+  element* extend = NULL;
+  size *= 2;
+  extend = (element*)realloc(array, size*sizeof(element));
+  if (extend!=NULL) {
+    array = extend; 
+  }else {
+    free(array);
+    puts("Error reallocation memory");
   }
 }
 
+template<typename TValue>
+void CQueue<TValue>::add(TValue data){
+  array->data = data;
+  if (array->index==size-1) 
+    expand();
+  ++array;
+}
+
+
 int main(){
-  CQueue<std::string>test; 
-  test.add("data");
-  test.add("Mafalda");
-  test.add("lol");
+  CQueue<int>test; 
+  test.add(2);
+  test.add(4);
+  test.add(6);
+  test.add(7);
   return 0;
 }
