@@ -22,11 +22,12 @@ class CQueue {
     void add(TValue data);
   private:
     int size = 1;
-    element* array; 
+    int index = 0;
+    element* array = (element*) malloc(sizeof(element));
+    element* it = array;
 };
 template<typename TValue>
 CQueue<TValue>::CQueue(){
-  array = (element*) malloc(sizeof(element));
 }
 
 template<typename TValue>
@@ -47,10 +48,12 @@ void CQueue<TValue>::expand(){
 
 template<typename TValue>
 void CQueue<TValue>::add(TValue data){
-  array->data = data;
-  if (array->index==size-1) 
+  it->data = data;
+  it->index = index;
+  if (it->index == size-1)
     expand();
-  ++array;
+  ++it;
+  ++index;
 }
 
 
