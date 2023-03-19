@@ -3,11 +3,10 @@
  * and retrieving without removing the element in succession. If an operation is invalid,
  * throw an appropriate exception.*/
 
+#include <cstddef>
 #include <cstdio>
 #include <cstdlib>
-#include <cstddef>
 #include <iostream>
-#include <array>
 
 template <typename TValue>
 class CQueue {
@@ -20,6 +19,7 @@ class CQueue {
     ~CQueue(); 
     void add(TValue data);
     auto retrieve();
+    void remove();
   private:
     int size = 1;
     int index = 0;
@@ -49,8 +49,6 @@ void CQueue<TValue>::expand(){
 
 template<typename TValue>
 void CQueue<TValue>::add(TValue data){
-  if (it->index==index) 
-    ++it; 
   it->data = data;
   it->index = index;
   if (index == size-1)
@@ -60,10 +58,22 @@ void CQueue<TValue>::add(TValue data){
 }
 
 template<typename TValue>
+void CQueue<TValue>::remove(){
+  element* shrink = NULL;
+  shrink = (element*)realloc(array,(index-1)*sizeof(element));
+  if(shrink!=NULL){
+    array = shrink;
+  }else {
+    free(array);
+    puts("Error deleting last item");
+  }
+  --it;
+  --index;
+}
+
+template<typename TValue>
 auto CQueue<TValue>::retrieve(){
-  if (it->index!=index) 
-    --it;
-  return *it;
+  return array[index-1];
 }
 
 int main(){
@@ -72,7 +82,8 @@ int main(){
   test.add(4);
   test.add(6);
   test.add(8);
-  auto retrieved = test.retrieve(); 
+  test.remove();
+  auto retrieved = test.retrieve();
 
   return 0;
 }
