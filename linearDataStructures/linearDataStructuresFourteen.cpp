@@ -53,7 +53,7 @@ void CQueue<TValue>::add(TValue data){
   it->index = index;
   if (index == size-1)
     expand();
-  ++it;
+  it = &array[index];
   ++index;
 }
 
@@ -67,7 +67,7 @@ void CQueue<TValue>::remove(){
     free(array);
     puts("Error deleting last item");
   }
-  --it;
+  it = &array[index];
   --index;
 }
 
