@@ -1,2 +1,6 @@
 .ccls
 .ccls-cache/
+
+# Vim swap
+*.swp
+*.swo
