@@ -27,4 +27,20 @@ List::List(int data){
 
 List::~List(){}
 
+void List::add(int data){
+  while (head->next) {
+    head = head->next; 
+  }
+  head->next = new Node;
+  head->next->data = data;
+}
 
+int main(){
+  List list(8);
+  list.add(3);
+  list.add(5);
+  list.add(7);
+  list.add(2);
+  list.add(4);
+  return 0;
+}
