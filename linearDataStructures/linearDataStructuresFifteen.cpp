@@ -13,23 +13,51 @@ class List{
     ~List();
     void add(int data);
     void sort();
+    void print();
 
   private:
-    Node* head;
-    Node* pre;
-    Node* root = new Node;
     int min;
-    void findMin(Node * start);
-    void setPointers(Node * start);
+    Node* head;
+    Node* it;
+    Node* root = new Node;
+    void findMin(Node* start);
+    void swap(Node* a, Node* b);
+    void setIterator(Node* start);
 };
 
 List::List(int data){
   root->data = data;
   head = root;
-  min = root->data;
 }
 
 List::~List(){}
+
+void List::findMin(Node* start){
+  head = start;
+  min = start->data;
+  while(head){
+    if (head->data<min) {
+      min = head->data; 
+    } 
+    head = head->next; 
+  }
+}
+
+void List::swap(Node* a, Node* b){
+  int temp = a->data;
+  a->data = b->data;
+  b->data = temp;
+}
+
+void List::setIterator(Node* start){
+  head = start;
+  while (head->next) {
+    if (head->data==min) {
+      break; 
+    } 
+    head = head->next;
+  }
+}
 
 void List::add(int data){
   while (head->next) {
@@ -39,28 +67,24 @@ void List::add(int data){
   head->next->data = data;
 }
 
-void List::findMin(Node * start){
-  head = start;
-  min = start->data;
-  while(head->next){
-    head = head->next;
-    if (head->data<min) 
-      min = head->data; 
-  }
-  setPointers(start);
-}
-
-void List::setPointers(Node * start){
-  head = start;
-  while (head->data!=min) {
-    pre = head;
-    head = head->next;
-  }
-}
-
 void List::sort(){
-  findMin(root);
+  it = root;
+  while (it->next) {
+    findMin(it);  
+    setIterator(it);
+    swap(it, head);
+    it = it->next;
+  } 
 }
+
+void List::print(){
+  it = root;
+  while (it->next) {
+    std::cout<<it->data<<'\n'; 
+    it = it->next;
+  }
+}
+
 
 int main(){
   List list(8);
@@ -70,6 +94,6 @@ int main(){
   list.add(2);
   list.add(4);
   list.sort();
-
+  list.print();
   return 0;
 }
