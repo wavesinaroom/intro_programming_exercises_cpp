@@ -93,6 +93,7 @@ int main(){
   list.add(7);
   list.add(2);
   list.add(4);
+  list.add(9);
   list.sort();
   list.print();
   return 0;
