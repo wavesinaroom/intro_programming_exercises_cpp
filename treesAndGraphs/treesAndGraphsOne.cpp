@@ -4,12 +4,11 @@
 #include <vector>
 
 class Node{
-  int* root;
-  std::vector<Node*> children;
-
   public:
+  int root;
+  std::vector<Node*> children;
     Node(int value){
-      *root = value; 
+      root = value; 
     }
 
     void add(int child){
@@ -19,9 +18,8 @@ class Node{
 
 class Tree{
 
-  private:
-    Node * root;
   public:
+    Node * root;
     Tree(int value){
      root = new Node(value);
     }
@@ -29,5 +27,9 @@ class Tree{
 
 int main(){
 
+  Node node(4);
+  node.add(8);
+  node.add(9);
+  node.add(10);
   return 0;
 }
