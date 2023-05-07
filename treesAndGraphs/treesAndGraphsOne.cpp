@@ -5,10 +5,10 @@
 
 class Node{
   public:
-  int root;
+  int value;
   std::vector<Node*> children;
-    Node(int value){
-      root = value; 
+    Node(int input){
+      value = input; 
     }
 
     void add(int child){
@@ -27,9 +27,14 @@ class Tree{
 
 int main(){
 
-  Node node(4);
-  node.add(8);
-  node.add(9);
-  node.add(10);
+  Tree tree(9);
+  tree.root->add(8);
+  tree.root->add(7);
+  tree.root->add(6);
+  tree.root->children[0]->add(8);
+  tree.root->children[0]->add(5);
+  tree.root->children[0]->add(9);
+  tree.root->children[0]->add(4);
+  
   return 0;
 }
