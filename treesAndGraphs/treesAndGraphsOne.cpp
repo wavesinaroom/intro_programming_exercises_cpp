@@ -1,12 +1,14 @@
 /* Write a program that finds the number of occurences of a number in a tree of numbers*/
 
 #include <iostream>
+#include <ostream>
 #include <vector>
 
+
 class Node{
-  public:
   int value;
   std::vector<Node*> children;
+  public:
     Node(int input){
       value = input; 
     }
@@ -14,27 +16,23 @@ class Node{
     void add(int child){
       children.push_back(new Node(child));
     }
-};
 
-class Tree{
-
-  public:
-    Node * root;
-    Tree(int value){
-     root = new Node(value);
+    void print(){
+      std::cout<<value<<'\n';
+      for(auto&child:children){
+        child->print();
+      }
     }
 };
 
 int main(){
 
-  Tree tree(9);
-  tree.root->add(8);
-  tree.root->add(7);
-  tree.root->add(6);
-  tree.root->children[0]->add(8);
-  tree.root->children[0]->add(5);
-  tree.root->children[0]->add(9);
-  tree.root->children[0]->add(4);
+  Node node(9);
+  node.add(7);
+  node.add(8);
+  node.add(6);
+  node.add(5);
+  node.print();
   
   return 0;
 }
