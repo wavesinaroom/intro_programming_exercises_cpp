@@ -4,7 +4,6 @@
 #include <ostream>
 #include <vector>
 
-
 class Node{
   int value;
   std::vector<Node*> children;
@@ -19,8 +18,10 @@ class Node{
 
     void print(){
       std::cout<<value<<'\n';
-      for(auto&child:children)
-        child->print();
+      for(auto&child:children){
+        if(child)
+          child->print();
+      }
     }
 };
 
@@ -34,6 +35,5 @@ class Tree{
 
 int main(){
   Tree tree(9); 
-  tree.root->add(8);
   return 0;
 }
