@@ -19,20 +19,21 @@ class Node{
 
     void print(){
       std::cout<<value<<'\n';
-      for(auto&child:children){
+      for(auto&child:children)
         child->print();
-      }
+    }
+};
+
+class Tree{
+  public:
+    Node* root;
+    Tree(int value){
+      root = new Node(value);
     }
 };
 
 int main(){
-
-  Node node(9);
-  node.add(7);
-  node.add(8);
-  node.add(6);
-  node.add(5);
-  node.print();
-  
+  Tree tree(9); 
+  tree.root->add(8);
   return 0;
 }
