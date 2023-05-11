@@ -23,6 +23,16 @@ class Node{
           child->print();
       }
     }
+
+    int findOccurence(int value){
+      int count = 0;
+      if(this->value == value)
+        ++count;
+      for(auto&child:children)
+        if(child->value==value)
+          ++count;
+      return count;
+    }
 };
 
 class Tree{
@@ -50,5 +60,6 @@ int main(){
   tree.root->children[0]->children[0]->add(4);
   tree.root->children[0]->children[0]->add(4);
   tree.root->children[0]->children[0]->add(7);
+  int test=tree.root->findOccurence(7);
   return 0;
 }
