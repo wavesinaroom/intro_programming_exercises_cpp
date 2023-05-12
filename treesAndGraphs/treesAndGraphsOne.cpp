@@ -5,8 +5,8 @@
 #include <vector>
 
 class Node{
-  int value;
   public:
+    int value;
     std::vector<Node*> children;
     Node(int input){
       value = input; 
@@ -23,26 +23,25 @@ class Node{
           child->print();
       }
     }
-
-    int findOccurence(int value){
-      int count = 0;
-      if(this->value == value)
-        ++count;
-      for(auto&child:children)
-        if(child->value==value)
-          ++count;
-      return count;
-    }
 };
 
 class Tree{
   public:
     Node* root;
+    int occurence = 0;
     Tree(int value){
       root = new Node(value);
     }
-
   
+    void countOccurence(Node* node, int input){
+      if(!node)
+        return;
+      if(node->value == input)
+        ++occurence;
+      for(auto& child: node->children){
+        countOccurence(child, input);
+      }
+    }
 };
 
 int main(){
@@ -60,6 +59,7 @@ int main(){
   tree.root->children[0]->children[0]->add(4);
   tree.root->children[0]->children[0]->add(4);
   tree.root->children[0]->children[0]->add(7);
-  int test=tree.root->findOccurence(7);
+  tree.countOccurence(tree.root, 4);
+
   return 0;
 }
