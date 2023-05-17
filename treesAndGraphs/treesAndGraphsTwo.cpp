@@ -24,6 +24,14 @@ class Node{
     std::vector<Node*> getChildren(){
       return children;
     }
+    
+    void print(){
+      std::cout<<data<<'\n';
+      for(auto& child: children){
+        std::cout<<child->data<<'\t';
+      }
+      std::cout<<'\n';
+    }
 };
 
 class Tree{
@@ -49,10 +57,9 @@ int main(){
   Node node(7);
   node.add(8);
   node.add(9);
+  node.add(6);
   node.add(5);
-  node.add(0);
 
-  std::cout<<node.hasNumberNodes(5)<<'\n';
-
+  node.print();
   return 0;
 }
