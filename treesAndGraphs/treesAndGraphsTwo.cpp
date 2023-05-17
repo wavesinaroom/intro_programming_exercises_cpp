@@ -4,29 +4,55 @@
 #include <vector>
 
 class Node{
-  int value;
+  int data;
+  std::vector<Node*> children; 
   public:
-    int nodeCount = 1;
-    std::vector<Node*> children; 
+    Node(int value){data = value;}
 
-    Node(int value){this->value = value;}
     void add(int value){
       children.push_back(new Node(value));
     }
 
-    void countNodes(){
-      nodeCount += children.size();       
-  }
+    bool hasNumberNodes(int number){
+      return number == (children.size()+1);
+    }
+     
+    int getData(){
+      return data;
+    }
+
+    std::vector<Node*> getChildren(){
+      return children;
+    }
+};
+
+class Tree{
+  Node* root;
+  public:
+    Tree(int value){root = new Node(value);}
+
+    void printNNodesSubtrees(Node* node, int value){
+      if(!node)
+        return;
+
+      if(node->hasNumberNodes(value)){
+        std::cout<<node->getData()<<'\n'; 
+      }
+
+      for(auto& child: node->getChildren()){
+        printNNodesSubtrees(child, value);
+      }
+    }
 };
 
 int main(){
-    Node node(9);
-    node.add(8);
-    node.add(7);
-    node.add(3);
-    node.add(6);
-    node.add(4);
-    node.countNodes();
+  Node node(7);
+  node.add(8);
+  node.add(9);
+  node.add(5);
+  node.add(0);
+
+  std::cout<<node.hasNumberNodes(5)<<'\n';
 
   return 0;
 }
