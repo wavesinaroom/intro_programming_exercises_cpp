@@ -39,27 +39,50 @@ class Tree{
   public:
     Tree(int value){root = new Node(value);}
 
-    void printNNodesSubtrees(Node* node, int value){
+    Node* getRoot(){
+      return root;
+    }
+
+    void traverse(Node* node, int number){
       if(!node)
         return;
 
-      if(node->hasNumberNodes(value)){
-        std::cout<<node->getData()<<'\n'; 
-      }
+      if(node->hasNumberNodes(number))
+        node->print();
 
-      for(auto& child: node->getChildren()){
-        printNNodesSubtrees(child, value);
-      }
+      for(auto& child: node->getChildren())
+        traverse(child, number);
     }
 };
 
 int main(){
-  Node node(7);
-  node.add(8);
-  node.add(9);
-  node.add(6);
-  node.add(5);
+  Tree tree(7);
+  Node* root = tree.getRoot();
+  root->add(8);
+  root->add(9);
+  root->add(6);
+  root->add(5);
 
-  node.print();
+  std::vector<Node*> children= root->getChildren();
+
+  children[0]->add(8);
+  children[0]->add(9);
+  children[0]->add(4);
+  children[0]->add(7);
+
+  children[1]->add(3);
+  children[1]->add(4);
+  children[1]->add(8);
+
+  children[2]->add(2);
+  children[2]->add(3);
+  
+  children[3]->add(8);
+  children[3]->add(9);
+  children[3]->add(4);
+  children[3]->add(7);
+  children[3]->add(5);
+
+  tree.traverse(root, 6);
   return 0;
 }
