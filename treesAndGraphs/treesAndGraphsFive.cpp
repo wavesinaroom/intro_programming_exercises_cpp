@@ -8,6 +8,7 @@ class Node{
     int data;
     Node* left = nullptr;
     Node* right = nullptr;
+    bool isLeave = false;
 
     Node(int value){data=value;}
 };
