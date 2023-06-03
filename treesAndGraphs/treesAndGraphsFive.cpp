@@ -12,20 +12,29 @@ class Node{
     Node(int value){data=value;}
 };
 
-bool traverse(Node* node);
+bool isLeaf(Node* node){
+  return !node->left&&!node->right;
+}
 
-bool traverse(Node* node){
-  if(!node->left&&!node->right)
-    return true; 
+bool isParent(Node* node){
+  if(node)
+    return (isLeaf(node->left)||isLeaf(node->right));
+  else
+    return false;
+}
 
-  if (traverse(node->left)||traverse(node->right)) 
-      std::cout<<node->data<<'\t';  
+void printParent(Node* node){
+  if(node == nullptr)
+    return;
 
-  if(node->left)
-    traverse(node->left);
+  if(!isLeaf(node)&&isParent(node))
+    std::cout<<node->data<<'\n';
 
+  if (node->left) 
+    printParent(node->left);
+  
   if (node->right) 
-    traverse(node->right);  
+    printParent(node->right);  
 }
 
 int main(){
@@ -33,10 +42,11 @@ int main(){
   root->left = new Node(2);
   root->right = new Node(3);
   root->left->left = new Node(4);
+  root->left->left->left = new Node(11);
   root->left->right = new Node (5);
   root->right->left = new Node(6);
   root->right->right = new Node(7);
 
-  traverse(root);
+  printParent(root);
   return 0;
 }
