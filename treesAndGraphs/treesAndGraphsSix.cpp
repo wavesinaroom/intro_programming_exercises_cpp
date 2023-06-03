@@ -10,15 +10,16 @@ class Tree{
     Tree(int value){data = value;}
 };
 
+bool isBalanced(Tree* root){
+  return (root->left&&root->right);
+}
+
 int main(){
 
-  Tree* root = new Tree(7);
-  root->left = new Tree(8);
-  root->right = new Tree(9);
-  root->left->left = new Tree(11);
-  root->left->right = new Tree(12);
-  root->right->left = new Tree(13);
-  root->right->left = new Tree(14);
+  Tree* root = new Tree(1);
+  root->left = new Tree(2);
+  root->right= new Tree(3);
+  std::cout<<isBalanced(root)<<'\n';
 
   return 0;
 }
