@@ -10,7 +10,10 @@
       Node * left = nullptr;
       Node * right = nullptr;
       Node(int value){data = value;}
-
+      
+      int getData(){
+        return data;
+      }
       bool hasTwoLeaves(){
         return(left && right);
       }
@@ -33,6 +36,8 @@ class Tree{
         nodes.push(node->left);
         nodes.pop();
       }
+      std::cout<<nodes.front()->getData()<<'\n';
+      std::cout<<nodes.back()->getData()<<'\n';
     }
 
 };
