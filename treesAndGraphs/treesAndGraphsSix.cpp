@@ -3,13 +3,12 @@
 #include <iostream>
 #include <queue>
 
-class Tree{
   class Node{
     private:
       int data;
+    public:
       Node * left = nullptr;
       Node * right = nullptr;
-    public:
       Node(int value){data = value;}
 
       bool hasTwoLeaves(){
@@ -17,14 +16,33 @@ class Tree{
       }
   };
 
+class Tree{
   public:
+    std::queue<Node*> nodes;
     Node* root;
-    Tree(int value){root = new Node(value);}
+    Tree(int value){
+      root = new Node(value);}
+
+    void isBalanced(Node* node){
+      if(!node||!node->hasTwoLeaves())
+        return;
+
+      nodes.push(node);
+      if (node->hasTwoLeaves()) {
+        nodes.push(node->right);
+        nodes.push(node->left);
+        nodes.pop();
+      }
+    }
+
 };
 
 
 int main(){
-
+  Tree tree(1);
+  tree.root->left = new Node(2);
+  tree.root->right = new Node(3);
+  tree.isBalanced(tree.root);
 
   return 0;
 }
