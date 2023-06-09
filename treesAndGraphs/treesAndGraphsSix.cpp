@@ -26,18 +26,24 @@ class Tree{
     Tree(int value){
       root = new Node(value);}
 
-    void isBalanced(Node* node){
-      if(!node||!node->hasTwoLeaves())
-        return;
-
-      nodes.push(node);
-      if (node->hasTwoLeaves()) {
-        nodes.push(node->right);
+    bool queue(Node* node){
+      if(node->hasTwoLeaves()){
+        nodes.push(node);
         nodes.push(node->left);
-        nodes.pop();
+        nodes.push(node->right);
+        return true;
+      }else{
+        std::cout<<"Tree isn't perfectly balanced"<<'\n';
+        return false;
       }
-      std::cout<<nodes.front()->getData()<<'\n';
-      std::cout<<nodes.back()->getData()<<'\n';
+    }
+
+    void breadthTraverse(){
+      bool isBalanced = queue(root);
+      while(!nodes.empty()&&isBalanced){
+        nodes.pop();
+        isBalanced = queue(nodes.front());
+      }
     }
 
 };
@@ -47,7 +53,6 @@ int main(){
   Tree tree(1);
   tree.root->left = new Node(2);
   tree.root->right = new Node(3);
-  tree.isBalanced(tree.root);
 
   return 0;
 }
