@@ -17,6 +17,9 @@
       bool hasTwoLeaves(){
         return(left && right);
       }
+      bool isLeaf(){
+        return(!left&&!right);
+      }
   };
 
 class Tree{
@@ -26,33 +29,30 @@ class Tree{
     Tree(int value){
       root = new Node(value);}
 
-    bool queue(Node* node){
-      if(node->hasTwoLeaves()){
-        nodes.push(node);
-        nodes.push(node->left);
-        nodes.push(node->right);
-        return true;
-      }else{
-        std::cout<<"Tree isn't perfectly balanced"<<'\n';
-        return false;
-      }
-    }
-
     void breadthTraverse(){
-      bool isBalanced = queue(root);
-      while(!nodes.empty()&&isBalanced){
+      nodes.push(root);
+      while(!nodes.empty()&&nodes.front()->hasTwoLeaves()){
+        nodes.push(nodes.front()->left);
+        nodes.push(nodes.front()->right);
         nodes.pop();
-        isBalanced = queue(nodes.front());
       }
-    }
-
+      if(nodes.front()->isLeaf()){
+        std::cout<<"Tree's balanced"<<'\n';
+        return;
+      }else{
+        std::cout<<"Tree's not balanced"<<'\n';
+        return;
+      }
+  }    
 };
 
 
 int main(){
   Tree tree(1);
   tree.root->left = new Node(2);
+  tree.root->left->left = new Node(4);
+  tree.root->left->right = new Node(5);
   tree.root->right = new Node(3);
-
+  tree.breadthTraverse();
   return 0;
 }
