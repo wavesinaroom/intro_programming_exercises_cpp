@@ -16,3 +16,9 @@ class Vertex{
     int getData(){ return data; }
 };
 
+int main(){
+  Vertex main(1);
+  Vertex child(2);
+  main.add(&child);
+  return 0;
+}
