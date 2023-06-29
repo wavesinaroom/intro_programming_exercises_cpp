@@ -16,12 +16,12 @@ class Vertex{
     int getData(){ return data; }
 };
 
-void dfs(Vertex* v){
+void dfs(Vertex* v, int count=0){
   if(!v)
     return;
-  std::cout<<v->getData()<<'\n';
+  std::cout<<v->getData()<<'\t'<<count<<'\n';
   for (auto &child : v->edges) {
-    dfs(child);
+    dfs(child,++count);
   }
 }
 
