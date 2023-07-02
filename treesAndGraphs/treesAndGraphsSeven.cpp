@@ -16,13 +16,14 @@ class Vertex{
     int getData(){ return data; }
 };
 
-void dfs(Vertex* v, int count=0){
-  if(!v)
-    return;
-  std::cout<<v->getData()<<'\t'<<count<<'\n';
+int dfs(Vertex* v, int value, int count=0){
+  if(!v||v->getData()==value)
+    return count;
   for (auto &child : v->edges) {
-    dfs(child,++count);
+    return dfs(child,value, ++count);
   }
+  
+  return count;
 }
 
 int main(){
@@ -41,6 +42,8 @@ int main(){
   root.edges[1]->add(&subtwo);
   root.edges[2]->add(&subthree);
   root.edges[0]->edges[0]->add(&subsubone);
-  dfs(&root);
+  int a = dfs(&root, 8);
+  int b = dfs(&root, 2);
+  std::cout<<a-b<<'\n';
   return 0;
 }
