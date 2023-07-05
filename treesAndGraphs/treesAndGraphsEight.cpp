@@ -20,11 +20,10 @@ bool isCyclic(Vertex * v, Vertex * start){
     return false;
 
   for (auto &child : v->edges) {
+    if(child == start)
+      return true;
     return isCyclic(child, start);
   }
-
-  if(v==start)
-    return true;
 
   return false;
 }
@@ -50,5 +49,5 @@ int main(){
   root.edges[0]->edges[0]->add(&eight);
   root.edges[0]->edges[0]->edges[0]->add(&root);
 
-  std::cout<<isCyclic(&root, &root);
+  std::cout<<isCyclic(&root, &root)<<'\n';
 }
