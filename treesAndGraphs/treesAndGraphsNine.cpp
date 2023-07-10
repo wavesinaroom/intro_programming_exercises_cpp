@@ -21,6 +21,10 @@ int main(){
 
   Vertex root  (0);
   Vertex one (1);
+  Vertex two (2);
+  Vertex three (3);
   root.add(&one);
+  root.add(&two);
+  root.add(&three);
 }
 
