@@ -3,28 +3,15 @@
 #include <iostream>
 #include <vector>
 
-class Vertex {
-  private:
+class Graph{
+  struct Node{
     int data;
-  public:
-    Vertex(int value){data = value;}
-    Vertex * parent;
-    int getData(){return data;}
-    std::vector<Vertex *> edges;
-    void add(Vertex * v){
-      edges.push_back(v);
-      edges.back()->parent = this;
-    };
-};
+  };
+  struct Edge{
+    Node *from, *to;
+  };
 
-int main(){
-
-  Vertex root  (0);
-  Vertex one (1);
-  Vertex two (2);
-  Vertex three (3);
-  root.add(&one);
-  root.add(&two);
-  root.add(&three);
+  std::vector<Node*> nodes;
+  std::vector<Edge*> edges;
 }
 
