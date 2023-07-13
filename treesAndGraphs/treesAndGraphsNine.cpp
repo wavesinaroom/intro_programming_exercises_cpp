@@ -19,6 +19,9 @@ class Graph{
 
   public:
     void addNode(T data){nodes.push_back(data);}
-    void addEdge(T &from, T &to){edges.push_back(Edge<T>(from, to));}
+    void addEdge(T &from, T &to){
+      edges.push_back(Edge<T>(from, to));
+      edges.push_back(Edge<T>(to,from));
+    }
 };
 
