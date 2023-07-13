@@ -3,15 +3,20 @@
 #include <iostream>
 #include <vector>
 
-class Graph{
-  struct Node{
-    int data;
-  };
-  struct Edge{
-    Node *from, *to;
-  };
+template<typename T> class Node{
+  T* data;
+  public:
+    Node(T value){data=&value;}
+};
 
-  std::vector<Node*> nodes;
-  std::vector<Edge*> edges;
-}
+template<typename T> class Edge{
+  Node<T> *from, *to;
+};
+
+template <typename T>
+class Graph{
+
+  std::vector<Node<T>*> nodes;
+  std::vector<Edge<T>*> edges;
+};
 
