@@ -3,25 +3,44 @@
 #include <iostream>
 #include <vector>
 
-template<typename T> class Edge{
-  T *from, *to;
+template<typename T>
+class Node{
+  private:
+    T data;
+    std::vector<Node*> edges;
   public:
-    Edge<T>(T &from, T &to){
-      this->from = from; this->to = to;
+    template<typename V> friend class Graph;
+    Node(T value){
+      data = value;
     }
 };
 
-template <typename T>
+template <typename V>
 class Graph{
-
-  std::vector<T> nodes;
-  std::vector<Edge<T>*> edges;
-
+  private:
+    std::vector<Node<V>> nodes;
+    Node<V>& getNode(V value){
+      for (auto & node : nodes) {
+        if(node== value) 
+          return node;
+      }
+      return nullptr;
+    }
   public:
-    void addNode(T data){nodes.push_back(data);}
-    void addEdge(T &from, T &to){
-      edges.push_back(Edge<T>(from, to));
-      edges.push_back(Edge<T>(to,from));
+    Graph();
+    void addNode(V data){
+      nodes.push_back(Node<V>(data));
+    }
+    
+    void connectNodes(const  V &from, const V &to){
+      getNode(from).edges.push_back(getNode(to));
+      getNode(to).edges.push_back(getNode(from));
     }
 };
 
+int main(){
+  Graph<int> graph;
+  graph.addNode(0);
+  graph.addNode(1);
+  return 0;
+}
