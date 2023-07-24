@@ -19,28 +19,32 @@ template <typename V>
 class Graph{
   private:
     std::vector<Node<V>> nodes;
-    Node<V>& getNode(V value){
-      for (auto & node : nodes) {
-        if(node== value) 
-          return node;
-      }
-      return nullptr;
-    }
+
   public:
-    Graph();
+    Graph(){};
     void addNode(V data){
       nodes.push_back(Node<V>(data));
     }
     
-    void connectNodes(const  V &from, const V &to){
-      getNode(from).edges.push_back(getNode(to));
-      getNode(to).edges.push_back(getNode(from));
-    }
+    void connectNodes(V from, V to){
+      Node<V>* a;
+      Node<V>* b;
+      for(auto & node:nodes){
+        if(node.data==from)
+          a = &node;
+        else if(node.data==to)
+          b = &node;
+      }
+      a->edges.push_back(b);
+      b->edges.push_back(a);
+    }    
 };
 
 int main(){
   Graph<int> graph;
   graph.addNode(0);
   graph.addNode(1);
+  graph.addNode(2);
+  graph.connectNodes(2, 0);
   return 0;
 }
