@@ -32,8 +32,10 @@ class Graph{
       for(auto & node:nodes){
         if(node.data==from)
           a = &node;
-        else if(node.data==to)
+        else if(node.data==to){
           b = &node;
+          break;
+        }
       }
       a->edges.push_back(b);
       b->edges.push_back(a);
