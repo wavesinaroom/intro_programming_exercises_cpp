@@ -1,6 +1,7 @@
 /* Implement a recursive traversal in depth in an undirected graph and a program to test it.*/
 
 #include <iostream>
+#include <iterator>
 #include <vector>
 
 template<typename T>
@@ -27,10 +28,11 @@ class Graph{
     }
 
     Node<V>* getNode(V value){
-      for (auto &node : nodes) {
-        if(node.data == value){
-          return &node; 
-        } 
+      typename std::vector<Node<V>>::iterator i = nodes.begin();
+      while(i!=nodes.end()){
+        if(i->data==value)
+          return &*i;
+        ++i;
       }
       return nullptr;
     }
@@ -49,6 +51,7 @@ class Graph{
       a->edges.push_back(b);
       b->edges.push_back(a);
     }    
+
     void dfs(V value, Node<V>* node){
       if(!node)
         return;
@@ -83,9 +86,6 @@ int main(){
   graph.connectNodes(4, 5);
   graph.connectNodes(5, 6);
   graph.connectNodes(5, 7);
-
-  auto node = graph.getNode(7);
-
 
   return 0;
 }
