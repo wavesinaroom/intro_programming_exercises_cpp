@@ -52,20 +52,23 @@ class Graph{
       b->edges.push_back(a);
     }    
 
+    std::vector<Node<V>*> visited;
     void dfs(V value, Node<V>* node){
       if(!node)
         return;
-
-      if(node->data==value){
-        std::cout<<"Node found!"<<'\n';
+      for(auto& visit: visited){
+        if(node == visit)
+          return;
+      }
+      if(node->data == value){
+        std::cout<<"Node found"<<'\n';
         return;
       }
-        
-      for (auto & vertex : node->edges) {
-        dfs(value, vertex); 
+      visited.push_back(node);
+      for(auto & edge: node->edges){
+        dfs(value, edge);
       }
-
-    }
+      }
 };
 
 int main(){
@@ -81,11 +84,14 @@ int main(){
   graph.connectNodes(0, 1);
   graph.connectNodes(1, 2);
   graph.connectNodes(2, 3);
+  graph.connectNodes(3,4);
   graph.connectNodes(0, 2);
   graph.connectNodes(2,4);
   graph.connectNodes(4, 5);
   graph.connectNodes(5, 6);
   graph.connectNodes(5, 7);
+
+  graph.dfs(7, graph.getNode(0)); 
 
   return 0;
 }
