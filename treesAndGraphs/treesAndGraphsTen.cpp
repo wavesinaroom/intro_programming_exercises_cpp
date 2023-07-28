@@ -18,15 +18,29 @@ template<typename T> class Node{
 
 template<typename V> class Graph{
   private:
-    std::vector<Node<V>*> nodes;
+    std::vector<Node<V>> nodes;
+    Node<V>* getNode(V value){
+      typename std::vector<Node<V>>::iterator it = nodes.begin();
+      while(it != nodes.end()){
+        if(it.data == value)
+          return &*it;
+        ++it;
+      }
+    } 
   public:
     Graph(){};
     void addNode(V value){
       nodes.push_back(Node<V>(value));
     }
+    void connecNodes(V from, V to){
+      Node<V>* a = getNode(from);
+      a->connectNode(getNode(to));
+    }
 };
 
-int main(){
 
+int main(){
+  Graph<int> graph;
+  graph.addNode(0);
   return 0;
 }
