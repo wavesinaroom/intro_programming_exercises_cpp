@@ -33,7 +33,7 @@ template<typename V> class Graph{
     void addNode(V value){
       nodes.push_back(Node<V>(value));
     }
-    void connecNodes(V from, V to){
+    void connectNodes(V from, V to){
       Node<V>* a = getNode(from);
       a->connectNode(getNode(to));
     }
@@ -44,6 +44,20 @@ int main(){
   Graph<int> graph;
   graph.addNode(0);
   graph.addNode(1);
-  graph.connecNodes(0, 1);
+  graph.addNode(2);
+  graph.addNode(3);
+  graph.addNode(4);
+  graph.addNode(5);
+  graph.addNode(6);
+  graph.addNode(7);
+  graph.connectNodes(0, 1);
+  graph.connectNodes(1, 2);
+  graph.connectNodes(2, 3);
+  graph.connectNodes(3,4);
+  graph.connectNodes(0, 2);
+  graph.connectNodes(2,4);
+  graph.connectNodes(4, 5);
+  graph.connectNodes(5, 6);
+  graph.connectNodes(5, 7);
   return 0;
 }
