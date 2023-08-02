@@ -7,10 +7,10 @@
 template<typename T> class Node{
   private:
     T data;
-    std::vector<Node<T>*> edges;
+    std::vector<Node*> edges;
   public:
-    Node(T value){data = value;}
     template<typename V> friend class Graph;
+    Node(T value){data = value;}
     void connectNode(Node<T>* to){
       edges.push_back(to);
     }
@@ -20,12 +20,13 @@ template<typename V> class Graph{
   private:
     std::vector<Node<V>> nodes;
     Node<V>* getNode(V value){
-      typename std::vector<Node<V>>::iterator it = nodes.begin();
-      while(it != nodes.end()){
-        if(it.data == value)
-          return &*it;
-        ++it;
+      typename std::vector<Node<V>>::iterator i = nodes.begin();
+      while (i!=nodes.end()) {
+        if(i->data == value) 
+          return &*i;
+        ++i;
       }
+      return nullptr;
     } 
   public:
     Graph(){};
@@ -42,5 +43,7 @@ template<typename V> class Graph{
 int main(){
   Graph<int> graph;
   graph.addNode(0);
+  graph.addNode(1);
+  graph.connecNodes(0, 1);
   return 0;
 }
