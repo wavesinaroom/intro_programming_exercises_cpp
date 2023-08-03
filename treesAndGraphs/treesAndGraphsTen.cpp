@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <iterator>
+#include <deque>
 
 template<typename T> class Node{
   private:
@@ -19,6 +20,7 @@ template<typename T> class Node{
 template<typename V> class Graph{
   private:
     std::vector<Node<V>> nodes;
+
     Node<V>* getNode(V value){
       typename std::vector<Node<V>>::iterator i = nodes.begin();
       while (i!=nodes.end()) {
@@ -28,14 +30,44 @@ template<typename V> class Graph{
       }
       return nullptr;
     } 
+
+    std::deque<Node<V>*> queue;
   public:
     Graph(){};
+
     void addNode(V value){
       nodes.push_back(Node<V>(value));
     }
+
     void connectNodes(V from, V to){
       Node<V>* a = getNode(from);
       a->connectNode(getNode(to));
+    }
+
+    void enqueue(Node<V>* node){
+      if(node == nullptr)
+        return;
+
+      for (auto &visited: queue) {
+        if(node == visited)
+          return;
+      }
+
+      queue.push_back(node);
+
+      for (auto& edge : node->edges) {
+        enqueue(edge);
+      }
+    }
+
+  public:
+    void bfs(){
+      enqueue(&nodes[0]);
+
+      while(!queue.empty()){
+        std::cout<<queue.front()->data<<'\n';
+        queue.pop_front();
+      }
     }
 };
 
@@ -59,5 +91,6 @@ int main(){
   graph.connectNodes(4, 5);
   graph.connectNodes(5, 6);
   graph.connectNodes(5, 7);
+  graph.bfs();
   return 0;
 }
