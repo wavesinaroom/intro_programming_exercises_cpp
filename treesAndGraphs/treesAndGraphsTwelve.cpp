@@ -9,12 +9,32 @@
 #include <vector>
 
 class File{
-  std::string name;
+  std::filesystem::path path;
   int size;
+  public:
+    File(){};
 };
 
 class Folder{
-  std::string name;
+  std::filesystem::path path;
   std::vector<File> files;
   std::vector<Folder> folders;
+  public:
+    Folder(const std::filesystem::path &path){this->path = path;};
+    void dfs(Folder & folder){
+      std::filesystem::directory_iterator file_iterator{folder.path};
+      std::filesystem::file_status s = file_iterator->symlink_status();
+
+      std::filesystem::is_regular_file(s)?std::cout<<"file"<<'\n':std::cout<<"folder"<<'\n';
+    }
+
 };
+
+int main(){
+  std::filesystem::path test = "../../cppExercises";
+
+  Folder folder(test);
+  folder.dfs(folder);
+  
+  return 0;
+}
