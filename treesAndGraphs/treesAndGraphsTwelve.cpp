@@ -8,33 +8,47 @@
 #include <string>
 #include <vector>
 
+namespace fs = std::filesystem;
 class File{
-  std::filesystem::path path;
+  fs::path path;
   int size;
   public:
-    File(){};
+    File(const fs::path path){this->path = path;};
 };
 
 class Folder{
-  std::filesystem::path path;
+  fs::path path;
   std::vector<File> files;
   std::vector<Folder> folders;
   public:
-    Folder(const std::filesystem::path &path){this->path = path;};
-    void dfs(Folder & folder){
-      std::filesystem::directory_iterator file_iterator{folder.path};
-      std::filesystem::file_status s = file_iterator->symlink_status();
-
-      std::filesystem::is_regular_file(s)?std::cout<<"file"<<'\n':std::cout<<"folder"<<'\n';
-    }
+    Folder(const fs::path &path){this->path = path;};
+    friend void dfs(Folder *folder);
 
 };
 
+void dfs(Folder *folder){
+
+  if(folder==nullptr)
+    return;
+  for(auto it = fs::directory_iterator(folder->path); it!=fs::directory_iterator(); ++it ){
+
+    fs::file_status s = it->symlink_status();
+    fs::is_regular_file(s)?std::cout<<"file"<<'\n':std::cout<<"folder"<<'\n';
+
+    if(fs::is_regular_file(s))
+      folder->files.push_back(File(*it));
+    else
+      folder->folders.push_back(Folder(*it));
+  }
+
+
+}
+
 int main(){
-  std::filesystem::path test = "../../cppExercises";
+  fs::path test = "/home/wavesinaroom/Documents";
 
   Folder folder(test);
-  folder.dfs(folder);
+  dfs(&folder);
   
   return 0;
 }
