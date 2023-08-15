@@ -5,7 +5,6 @@
 
 #include <iostream>
 #include <filesystem>
-#include <string>
 #include <vector>
 
 namespace fs = std::filesystem;
@@ -17,12 +16,14 @@ class File{
 };
 
 class Folder{
+
   fs::path path;
   std::vector<File> files;
   std::vector<Folder> folders;
   public:
     Folder(const fs::path &path){this->path = path;};
     friend void dfs(Folder *folder);
+
 
 };
 
@@ -33,19 +34,22 @@ void dfs(Folder *folder){
   for(auto it = fs::directory_iterator(folder->path); it!=fs::directory_iterator(); ++it ){
 
     fs::file_status s = it->symlink_status();
-    fs::is_regular_file(s)?std::cout<<"file"<<'\n':std::cout<<"folder"<<'\n';
 
     if(fs::is_regular_file(s))
       folder->files.push_back(File(*it));
-    else
+    else{
       folder->folders.push_back(Folder(*it));
+      std::cout<<*it<<'\n';
+    }
   }
 
-
+  for(std::vector<Folder>::iterator f = folder->folders.begin(); f!=folder->folders.end(); ++f){
+    dfs(&(*f));
+  }
 }
 
 int main(){
-  fs::path test = "/home/wavesinaroom/Documents";
+  fs::path test = "/home/wavesinaroom/Documents/cppExercises";
 
   Folder folder(test);
   dfs(&folder);
