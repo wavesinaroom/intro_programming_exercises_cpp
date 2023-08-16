@@ -9,10 +9,22 @@
 
 namespace fs = std::filesystem;
 class File{
+
+
   fs::path path;
-  int size;
+  std::uintmax_t size;
   public:
-    File(const fs::path path){this->path = path;};
+    inline static std::uintmax_t files_size = 0;
+
+    File(const fs::path &path, std::uintmax_t size){
+      this->path = path;
+      this->size = size;
+    };
+    static void addFilesSize(std::vector<File> &files){
+      for(auto const & file: files){
+        File::files_size += file.size;
+      }
+    }
 };
 
 class Folder{
@@ -23,8 +35,6 @@ class Folder{
   public:
     Folder(const fs::path &path){this->path = path;};
     friend void dfs(Folder *folder);
-
-
 };
 
 void dfs(Folder *folder){
@@ -36,12 +46,12 @@ void dfs(Folder *folder){
     fs::file_status s = it->symlink_status();
 
     if(fs::is_regular_file(s))
-      folder->files.push_back(File(*it));
-    else{
+      folder->files.push_back(File(*it, fs::file_size((*it))));
+    else
       folder->folders.push_back(Folder(*it));
-      std::cout<<*it<<'\n';
-    }
   }
+
+  File::addFilesSize(folder->files);
 
   for(std::vector<Folder>::iterator f = folder->folders.begin(); f!=folder->folders.end(); ++f){
     dfs(&(*f));
@@ -54,5 +64,6 @@ int main(){
   Folder folder(test);
   dfs(&folder);
   
+  std::cout<<File::files_size<<'\n';
   return 0;
 }
