@@ -23,4 +23,6 @@ class Graph{
   std::vector<Node> nodes;
   public:
     Graph(){};
+    void addNode(int data){nodes.push_back(Node(data));};
+    void connectNodes(Node* from, Node* to){edges.push_back(Edge(from,to));};
 };
