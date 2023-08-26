@@ -55,6 +55,25 @@ int main(){
   graph.addNode(9);
 
   graph.connectNodes(1, 2);
+  graph.connectNodes(2, 3);
+  graph.connectNodes(3, 1);
+
+  graph.connectNodes(1, 4);
+  graph.connectNodes(4, 5);
+  graph.connectNodes(5, 1);
+
+  graph.connectNodes(2, 5);
+  graph.connectNodes(5, 6);
+  graph.connectNodes(6, 2);
+
+  graph.connectNodes(2, 7);
+  graph.connectNodes(7, 8);
+  graph.connectNodes(8, 2);
+
+  graph.connectNodes(3, 8);
+  graph.connectNodes(8, 9);
+  graph.connectNodes(9, 3);
+
 
   return 0;
 }
