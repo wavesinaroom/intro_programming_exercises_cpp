@@ -16,30 +16,27 @@ class Edge{
   Node* from;
   Node* to;
   public:
-    Edge(){}
+    Edge(Node* from, Node* to){this->from = from; this->to = to;}
     friend class Graph;
 };
 
 class Graph{
   private:
     bool isLoop;
-    std::vector<Edge> edges;
     std::vector<Node> nodes;
-
+    std::vector<Edge> edges;
+   
   public:
     Graph(){};
     void addNode(int data){nodes.push_back(Node(data));};
     void connectNodes(int from, int to){
-      edges.push_back(Edge());
-      for(std::vector<Node>::iterator it = nodes.begin(); it!=nodes.end(); ++it){
-        if(it->data == from)
-          edges.front().from = &*it;
-        else if (it->data == to)
-          edges.front().to = &*it;
-      }
+      auto f = std::find_if(nodes.begin(), nodes.end(),[from](const Node& node){return node.data == from;});
+      auto t = std::find_if(nodes.begin(), nodes.end(),[to](const Node& node){return node.data == to;});
+      edges.push_back(Edge(&*f, &*t));
     };
-};
 
+};
+  
 int main(){
 
   Graph graph;
@@ -53,6 +50,10 @@ int main(){
   graph.addNode(7);
   graph.addNode(8);
   graph.addNode(9);
+
+  graph.connectNodes(0, 1);
+  graph.connectNodes(1, 2);
+  graph.connectNodes(2, 0);
 
   graph.connectNodes(1, 2);
   graph.connectNodes(2, 3);
@@ -74,6 +75,4 @@ int main(){
   graph.connectNodes(8, 9);
   graph.connectNodes(9, 3);
 
-
-  return 0;
 }
