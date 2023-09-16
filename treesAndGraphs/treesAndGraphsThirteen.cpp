@@ -24,9 +24,20 @@ class Graph{
   private:
     bool isLoop;
     std::vector<Node> nodes;
-    std::vector<Edge> edges;
    
   public:
+    std::vector<Edge> edges;
+    void traverse(const Edge& e, int start){
+      auto it = std::find_if(edges.begin(), edges.end(), [e](const auto& edge){
+        return edge.from == e.to;
+    });
+      std::cout<<"From: "<<it->from->data<<'\t'<<"To: "<<it->to->data<<'\n';
+      if(it->to->data == start){
+        std::cout<<"Loop"<<'\n';
+        return;
+      }
+      traverse(*it, start);
+    };
     Graph(){};
     void addNode(int data){nodes.push_back(Node(data));};
     void connectNodes(int from, int to){
@@ -34,9 +45,12 @@ class Graph{
       auto t = std::find_if(nodes.begin(), nodes.end(),[to](const Node& node){return node.data == to;});
       edges.push_back(Edge(&*f, &*t));
     };
-
-};
   
+    void findLoops(){
+      std::for_each(edges.begin(), edges.end(), [this](const auto& e){traverse(e, e.from->data);});
+    };
+};
+
 int main(){
 
   Graph graph;
@@ -75,4 +89,5 @@ int main(){
   graph.connectNodes(8, 9);
   graph.connectNodes(9, 3);
 
+  graph.traverse(graph.edges[0], 0);
 }
