@@ -19,19 +19,18 @@ class Graph{
   public:
     Graph(){};
     std::vector<Node> nodes;
-    std::vector<Node> visited;
-    void traverse(const Node node, std::vector<Node> visited){
-      for(const auto & v:visited){
-        if(v.data == node.data){
-          std::cout<<"Loop"<<'\n';
-          return;
-        }
+    std::vector<int> visited;
+    void traverse(Node node, std::vector<int> steps){
+      auto found = std::find_if(steps.begin(), steps.end(), [node](const int step){return node.data == step;});
+      if(found!=steps.end()){
+        std::cout<<"Loop"<<'\n';
+        return;
       }
 
-      visited.push_back(node);
+      steps.push_back(node.data);
 
       for(const auto & e:node.edges){
-        traverse(*e, visited);
+        traverse(*e, steps);
       }
     }
     void addNode(int data){nodes.push_back(Node(data));};
