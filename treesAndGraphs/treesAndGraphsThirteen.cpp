@@ -19,11 +19,10 @@ class Graph{
   public:
     Graph(){};
     std::vector<Node> nodes;
-    std::vector<int> visited;
     void traverse(Node node, std::vector<int> steps){
       auto found = std::find_if(steps.begin(), steps.end(), [node](const int step){return node.data == step;});
       if(found!=steps.end()){
-        std::cout<<"Loop"<<'\n';
+        std::cout<<"Loop at: "<<*found<<'\n';
         return;
       }
 
@@ -33,6 +32,14 @@ class Graph{
         traverse(*e, steps);
       }
     }
+
+    void findLoops(){
+      std::for_each(nodes.begin(), nodes.end(),[this](const Node& node){
+            std::vector<int>visited;
+            traverse(node, visited);});
+    }
+    
+
     void addNode(int data){nodes.push_back(Node(data));};
     void connectNodes(int from, int to){
       auto f = std::find_if(nodes.begin(), nodes.end(),[from](const Node& node){return node.data == from;});
@@ -68,5 +75,5 @@ int main(){
   graph.connectNodes(8, 9);
   graph.connectNodes(9, 0);
 
-  graph.traverse(graph.nodes[0], graph.visited);
+  graph.findLoops();
 }
