@@ -2,120 +2,112 @@
  * numbers. Write a program that by a given vertex x from the graph finds the shortest paths from it to all
  * other vertical */ 
 
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <iterator>
+#include<iostream>
+#include<vector>
 
-class Node {
-  class Edge{
-    int weight;
-    Node * to;
-    Edge(Node* to, int weight){
-      this->to = to;
-      this->weight = weight;
-    }
-    public:
-      friend class Node;
-      friend class Graph;
-  };
-
-  int data;
-  Node(int data){this->data = data;};
-  std::vector<Edge> edges;
-
+class Edge{
+  int *from, *to;
   public:
-    friend class Graph;
+    Edge(int from, int to){
+      this->from = &from;
+      this->to = &to;
+    }
 };
 
-
 class Graph{
-  int min = 0;
-  std::vector<std::vector<Node::Edge*>> shortest;
 
-  void traverse(Node::Edge* e, Node* end, std::vector<Node::Edge*> path){
-    path.push_back(e);
+  std::vector<int> nodes;
+  std::vector<std::vector<int>> matrix;
+  std::vector<std::vector<int>> shortest;
+  public:
 
-    if(e->to == end){
-      pushShortest(path);
-      return;
+  void addNode(int node){
+    nodes.push_back(node);
+
+    for(int m=0; m<matrix.size(); ++m){
+      matrix[m].push_back(0);
     }
 
-    for(int i = 0; i<e->to->edges.size(); ++i){
-      traverse(&e->to->edges[i], end, path);
+    std::vector<int> tmp;
+    for(int i=0; i<nodes.size(); ++i){
+      tmp.push_back(0);
     }
 
+    matrix.push_back(tmp);
   }
 
-  void pushShortest(std::vector<Node::Edge*> path){
-    int i = 0;
+  void addEdge(int from, int to){
+    int f, t, i=0;
 
-    if(shortest.size()==0){
-      shortest.push_back(path);
-      return;
-    }
-
-    while(i<shortest.size()){
-      if(shortest[i][0] == path[0]){
-        if(shortest[i][shortest[i].size()-1] == path[path.size()-1])
-          break;
-      }
+    while(i<nodes.size()){
+      if(i==from)
+        f = i;
+      else if(i==to)
+        t = i;
       ++i;
     }
 
-    if(path.size()<shortest[i].size()){
-      std::vector<std::vector<Node::Edge*>>::iterator it;
-      std::next(it, i);
-      shortest.erase(it);
-      shortest.push_back(path);
-    }
+    matrix[f][t] = 1;
   }
 
-  void printShortest(std::vector<Node::Edge*> path){
-    for(const auto & p:path){
-      std::cout<<p->to->data<<'\t';
-    }
-    std::cout<<'\n';
-  }
+  void traverse(int from, int to, std::vector<int> path){
+    int f = 0;
+    int t = 0;
+    std::vector<int*> visit;
 
-  public:
-    Graph(){};
-    std::vector<Node>nodes;
-    void addNode(int data){
-      nodes.push_back(Node(data));
+    if(from == to){
+      path.push_back(from);
+      pushShortest(path);
+      return;
     }
+      
+    path.push_back(from);
 
-    void addEdge(int from, int to, int weight){
-      Node *f, *t;
-      for(int i=0; i<nodes.size(); ++i){
-        if(nodes[i].data == from)
-          f = &nodes[i];
-        else if(nodes[i].data == to)
-          t = &nodes[i];
-      }
-      Node::Edge edge(t, weight);
-      f->edges.push_back(edge);
+    for(; f<nodes.size(); ++f){
+      if(nodes[f]==from)
+        break;
     }
     
-    void findShortest(int from, int to){
-      Node *f, *t;
-      std::vector<Node::Edge*> path;
-
-      for(int i=0; i<nodes.size(); ++i){
-        if(nodes[i].data == from)
-          f = &nodes[i];
-        else if(nodes[i].data == to)
-          t = &nodes[i];
-      }
-
-      for(int j=0; j<f->edges.size(); ++j){
-        traverse(&f->edges[j], t, path);
-      }
+    for(; t<matrix.size(); ++t){
+      if(matrix[f][t]==1&&nodes[t]!=path[path.size()-1])
+        visit.push_back(&nodes[t]);
     }
+
+    for(const auto & v:visit){
+      traverse(*v, to, path);
+    }
+  }
+
+  void pushShortest(std::vector<int> path){
+    int index = 0;
+    
+    if(shortest.empty()){
+      shortest.push_back(path);
+      return;
+    }
+
+    for(; index<=shortest.size(); ++index){
+      if(index==shortest.size()){
+        shortest.push_back(path);
+        return;
+      }
+
+      if(shortest[index][0]==path[0])
+        if(shortest[index][shortest[index].size()-1]==path[path.size()-1])
+          break;
+    }
+
+    if(path.size()<shortest[index].size()){
+      shortest.erase(shortest.begin()+index);
+      shortest.push_back(path);
+    }
+   
+  }
 };
 
 int main(){
   Graph graph;
+
   graph.addNode(0);
   graph.addNode(1);
   graph.addNode(2);
@@ -127,14 +119,18 @@ int main(){
   graph.addNode(8);
   graph.addNode(9);
 
-  graph.addEdge(0, 1, 2);
-  graph.addEdge(1, 2, 2);
-  graph.addEdge(2, 3, 2);
-  graph.addEdge(1, 4, 2);
-  graph.addEdge(2, 4, 2);
-  graph.addEdge(3, 4, 2);
+  graph.addEdge(0, 1);
+  graph.addEdge(1, 2);
+  graph.addEdge(2, 3);
+  graph.addEdge(3, 4);
+  graph.addEdge(4, 9);
+  graph.addEdge(0, 5);
+  graph.addEdge(5, 7);
+  graph.addEdge(7, 8);
+  graph.addEdge(8, 9);
 
-  graph.findShortest(1, 4);
+  std::vector<int> path;
+  graph.traverse(0, 9, path);
 
   return 0;
 }
