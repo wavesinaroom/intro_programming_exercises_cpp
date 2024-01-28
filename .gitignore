@@ -1,5 +1,6 @@
 .ccls
 .ccls-cache/
+*.out
 
 # Vim swap
 *.swp
